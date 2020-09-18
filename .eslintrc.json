@@ -12,6 +12,7 @@
     "@typescript-eslint/return-await": "off",
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/camelcase": "off",
+    "no-unused-vars": "off",
     "@typescript-eslint/space-before-function-paren": [
       "error",
       "never"
