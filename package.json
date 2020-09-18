@@ -7,12 +7,13 @@
     "test": "jest --passWithNoTests",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"    
+    "test:ci": "npm test -- --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/faker": "^5.1.0",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -22,6 +23,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "faker": "^5.1.0",
     "git-commit-msg-linter": "^2.7.0",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
