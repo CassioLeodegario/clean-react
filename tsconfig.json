@@ -5,7 +5,7 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ],
+    ],    
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -18,10 +18,9 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true    
   },
   "include": [
     "src"
-  ]  
+  ]    
 }
