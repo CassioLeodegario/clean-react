@@ -1,16 +1,21 @@
 import { RequiredFieldError } from '@/validation/errors';
 import { RequiredFieldValidation } from './required-field-validation';
 import faker from 'faker';
+import { FieldValidation } from '../protocols/field-validation';
+
+const makeSut = (): FieldValidation => {
+  return new RequiredFieldValidation(faker.database.column());
+};
 
 describe('RequiredFieldValidation', () => {
   test('Should Return Error if field is empty', () => {
-    const sut = new RequiredFieldValidation('email');
+    const sut = makeSut();
     const error = sut.validate('');
     expect(error).toEqual(new RequiredFieldError());
   });
 
   test('Should Return falsy if field is not empty', () => {
-    const sut = new RequiredFieldValidation('email');
+    const sut = makeSut();
     const error = sut.validate(faker.random.word());
     expect(error).toBeFalsy();
   });
