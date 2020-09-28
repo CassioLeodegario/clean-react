@@ -67,4 +67,28 @@ describe('SingUp component', () => {
     Helper.populateField(sut, 'password');
     Helper.testStatusForField(sut, 'password', validationError);
   });
+
+  test('Should show valid name state if validation succeeds', () => {
+    const { sut } = makeSut();
+    Helper.populateField(sut, 'name');
+    Helper.testStatusForField(sut, 'name');
+  });
+
+  test('Should show valid email state if validation succeeds', () => {
+    const { sut } = makeSut();
+    Helper.populateField(sut, 'email');
+    Helper.testStatusForField(sut, 'email');
+  });
+
+  test('Should show valid password state if validation succeeds', () => {
+    const { sut } = makeSut();
+    Helper.populateField(sut, 'password');
+    Helper.testStatusForField(sut, 'password');
+  });
+
+  test('Should show valid passwordConfirmation state if validation succeeds', () => {
+    const { sut } = makeSut();
+    Helper.populateField(sut, 'passwordConfirmation');
+    Helper.testStatusForField(sut, 'passwordConfirmation');
+  });
 });
