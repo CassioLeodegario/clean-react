@@ -143,7 +143,7 @@ describe('Login component', () => {
     const error = new InvalidCredentialsError();
     jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValue(error);
     await simulateValidSubmit(sut);
-    testElementText(sut, 'main-error', error.message);
+    Helper.testElementText(sut, 'main-error', error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
   });
 
