@@ -164,7 +164,7 @@ describe('SingUp component', () => {
   test('Should present error if Authentication fails', async() => {
     const { sut, addAccountSpy } = makeSut();
     const error = new EmailInUseError();
-    jest.spyOn(addAccountSpy, 'add').mockRejectedValue(error);
+    jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error);
     await simulateValidSubmit(sut);
     Helper.testElementText(sut, 'main-error', error.message);
     Helper.testChildCount(sut, 'error-wrap', 1);
@@ -178,5 +178,21 @@ describe('SingUp component', () => {
     expect(history.location.pathname).toBe('/');
   });
 
+  test('Should present error if SaveAccessToken fails', async() => {
+    const { sut, saveAccessTokenMock } = makeSut();
+    const error = new EmailInUseError();
+    jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error);
+    await simulateValidSubmit(sut);
+    Helper.testElementText(sut, 'main-error', error.message);
+    Helper.testChildCount(sut, 'error-wrap', 1);
+  });
+
+  test('Should go to signUp page', async() => {
+    const { sut } = makeSut();
+    const loginLink = sut.getByTestId('login-link');
+    fireEvent.click(loginLink);
+    expect(history.length).toBe(1);
+    expect(history.location.pathname).toBe('/login');
+  });
  
 });
