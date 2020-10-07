@@ -22,17 +22,8 @@
       font-size: 20px;
       text-transform: uppercase;
     }
-    .submit {
-      margin-top: 32px;
-
-      &:disabled{
-        background-color: $disabledBackground;
-        color: $disabledColor;
-        &:hover{
-          opacity: 1;
-          cursor: default;
-        }
-      }
+    button {
+      margin-top: 32px;   
     }
 
     .link {

@@ -23,14 +23,14 @@ const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const addAccountSpy = new AddAccountSpy();
   validationStub.errorMessage = params?.validationError;
-  const saveAccessTokenMock = new  SaveAccessTokenMock();
+  const saveAccessTokenMock = new SaveAccessTokenMock();
   const sut = render(
     <Router history={history}>
-    <SignUp
-      validation={validationStub}
-      addAccount={addAccountSpy}
-      saveAccessToken={saveAccessTokenMock}
-    />
+      <SignUp
+        validation={validationStub}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
     </Router>
 
   );
@@ -194,5 +194,4 @@ describe('SingUp component', () => {
     expect(history.length).toBe(1);
     expect(history.location.pathname).toBe('/login');
   });
- 
 });
