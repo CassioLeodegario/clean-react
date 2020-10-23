@@ -62,4 +62,16 @@ describe('Login', () => {
       .get(montarTestId('main-error')).should('contain.text', 'Credenciais Inválidas');
     cy.url().should('eq', `${baseUrl}/login`);
   });
+
+  it('Should save accessToken if valid credentials are provided', () => {
+    cy.get(montarTestId('email')).focus().type('mango@gmail.com');
+    cy.get(montarTestId('password')).focus().type('12345');
+    cy.get(montarTestId('submit')).click();
+    cy.get(montarTestId('error-wrap'))
+      .get(montarTestId('spinner')).should('exist')
+      .get(montarTestId('main-error')).should('not.exist')
+      .get(montarTestId('spinner')).should('not.exist');
+    cy.url().should('eq', `${baseUrl}/`);
+    cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')));
+  });
 });
