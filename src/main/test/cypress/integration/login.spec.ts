@@ -5,8 +5,10 @@ const montarTestId = (id: string): string => {
   return `[data-testid="${id}"]`;
 };
 
+const baseUrl: string = Cypress.config().baseUrl;
+
 describe('Login', () => {
-  it('should load with correct initial state', () => {
+  beforeEach(() => {
     cy.visit('login');
   });
 
@@ -47,5 +49,17 @@ describe('Login', () => {
       .should('contain.text', '🟢');
     cy.get(montarTestId('submit')).should('not.have.attr', 'disabled');
     cy.get(montarTestId('error-wrap')).should('not.have.descendants');
+  });
+
+  it('Should present error if invalid credentials are provided', () => {
+    cy.get(montarTestId('email')).focus().type(faker.internet.email());
+    cy.get(montarTestId('password')).focus().type(faker.random.alphaNumeric(5));
+    cy.get(montarTestId('submit')).click();
+    cy.get(montarTestId('error-wrap'))
+      .get(montarTestId('spinner')).should('exist')
+      .get(montarTestId('main-error')).should('not.exist')
+      .get(montarTestId('spinner')).should('not.exist')
+      .get(montarTestId('main-error')).should('contain.text', 'Credenciais Inválidas');
+    cy.url().should('eq', `${baseUrl}/login`);
   });
 });
