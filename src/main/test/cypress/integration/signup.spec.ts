@@ -101,9 +101,9 @@ describe('SignUp', () => {
     FormHelper.testHttpCallsCount(1);
   });
 
-  // it('Should not call submit if form is invalid', () => {
-  //   Http.mockOk();
-  //   cy.get(montarTestId('email')).focus().type('mango@gmail.com').type('{enter}');
-  //   FormHelper.testHttpCallsCount(0);
-  // });
+  it('Should not call submit if form is invalid', () => {
+    Http.mockOk();
+    cy.get(montarTestId('email')).focus().type(faker.internet.email()).type('{enter}');
+    FormHelper.testHttpCallsCount(0);
+  });
 });
