@@ -96,8 +96,7 @@ describe('Login', () => {
       }
     });
     cy.get(montarTestId('email')).focus().type(faker.internet.email());
-    cy.get(montarTestId('password')).focus().type(faker.random.alphaNumeric(5));
-    cy.get(montarTestId('submit')).click();
+    cy.get(montarTestId('password')).focus().type(faker.random.alphaNumeric(5)).type('{enter}');
     cy.get(montarTestId('spinner')).should('not.exist');
     cy.get(montarTestId('main-error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
     cy.url().should('eq', `${baseUrl}/login`);
@@ -134,5 +133,19 @@ describe('Login', () => {
     cy.get(montarTestId('password')).focus().type('12345');
     cy.get(montarTestId('submit')).dblclick();
     cy.get('@request.all').should('have.length', 1);
+  });
+
+  it('Should prevent multiple submits', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request');
+    cy.get(montarTestId('email')).focus().type('mango@gmail.com');
+    cy.get(montarTestId('submit')).dblclick();
+    cy.get('@request.all').should('have.length', 0);
   });
 });
