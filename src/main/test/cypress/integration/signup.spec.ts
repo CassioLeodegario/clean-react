@@ -68,12 +68,12 @@ describe('SignUp', () => {
     FormHelper.testUrl('/signup');
   });
 
-  // it('Should present UnexpectedError on default error cases', () => {
-  //   Http.mockUnexpectedError();
-  //   simulateValidSubmit();
-  //   FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
-  //   FormHelper.testUrl('/login');
-  // });
+  it('Should present UnexpectedError on default error cases', () => {
+    Http.mockUnexpectedError();
+    simulateValidSubmit();
+    FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
+    FormHelper.testUrl('/signup');
+  });
 
   // it('Should present UnexpectedError if invalid data is returned', () => {
   //   Http.mockInvalidData();
