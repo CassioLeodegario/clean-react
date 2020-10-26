@@ -6,12 +6,16 @@ const montarTestId = (id: string): string => {
   return `[data-testid="${id}"]`;
 };
 
-const simulateValidSubmit = (): void => {
+const populateField = (): void => {
   cy.get(montarTestId('name')).focus().type(faker.random.alphaNumeric(5));
   cy.get(montarTestId('email')).focus().type(faker.internet.email());
   const pass = faker.random.alphaNumeric(7);
   cy.get(montarTestId('password')).focus().type(pass);
   cy.get(montarTestId('passwordConfirmation')).focus().type(pass);
+};
+
+const simulateValidSubmit = (): void => {
+  populateField();
   cy.get(montarTestId('submit')).click();
 };
 
@@ -90,13 +94,12 @@ describe('SignUp', () => {
     FormHelper.testlocalStorageItem('accessToken');
   });
 
-  // it('Should prevent multiple submits', () => {
-  //   Http.mockOk();
-  //   cy.get(montarTestId('email')).focus().type('mango@gmail.com');
-  //   cy.get(montarTestId('password')).focus().type('12345');
-  //   cy.get(montarTestId('submit')).dblclick();
-  //   FormHelper.testHttpCallsCount(1);
-  // });
+  it('Should prevent multiple submits', () => {
+    Http.mockOk();
+    populateField();
+    cy.get(montarTestId('submit')).dblclick();
+    FormHelper.testHttpCallsCount(1);
+  });
 
   // it('Should not call submit if form is invalid', () => {
   //   Http.mockOk();
