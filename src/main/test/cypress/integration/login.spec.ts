@@ -14,40 +14,42 @@ describe('Login', () => {
   });
 
   it('Should load with correct initial state', () => {
-    cy.get(montarTestId('email')).should('have.attr', 'readOnly');
-    cy.get(montarTestId('email-status'))
+    cy.get(montarTestId('email-wrap')).should('have.attr', 'data-status', 'invalid');
+    cy.get(montarTestId('email'))
       .should('have.attr', 'title', 'Campo Obrigatório')
-      .should('contain.text', '🔴');
-    cy.get(montarTestId('password')).should('have.attr', 'readOnly');
-    cy.get(montarTestId('password-status'))
+      .should('have.attr', 'readOnly');
+    cy.get(montarTestId('email-label')).should('have.attr', 'title', 'Campo Obrigatório');
+    cy.get(montarTestId('password-wrap')).should('have.attr', 'data-status', 'invalid');
+    cy.get(montarTestId('password'))
       .should('have.attr', 'title', 'Campo Obrigatório')
-      .should('contain.text', '🔴');
+      .should('have.attr', 'readOnly');
+    cy.get(montarTestId('password-label')).should('have.attr', 'title', 'Campo Obrigatório');
     cy.get(montarTestId('submit')).should('have.attr', 'disabled');
     cy.get(montarTestId('error-wrap')).should('not.have.descendants');
   });
 
   it('Should present error state if form is invalid', () => {
     cy.get(montarTestId('email')).focus().type(faker.random.word());
-    cy.get(montarTestId('email-status'))
-      .should('have.attr', 'title', 'Valor inválido para o campo email')
-      .should('contain.text', '🔴');
+    cy.get(montarTestId('email-wrap')).should('have.attr', 'data-status', 'invalid');
+    cy.get(montarTestId('email')).should('have.attr', 'title', 'Valor inválido para o campo email');
+    cy.get(montarTestId('email-label')).should('have.attr', 'title', 'Valor inválido para o campo email');
     cy.get(montarTestId('password')).focus().type(faker.random.alphaNumeric(3));
-    cy.get(montarTestId('password-status'))
-      .should('have.attr', 'title', 'Valor inválido para o campo password')
-      .should('contain.text', '🔴');
+    cy.get(montarTestId('password-wrap')).should('have.attr', 'data-status', 'invalid');
+    cy.get(montarTestId('password')).should('have.attr', 'title', 'Valor inválido para o campo password');
+    cy.get(montarTestId('password-label')).should('have.attr', 'title', 'Valor inválido para o campo password');
     cy.get(montarTestId('submit')).should('have.attr', 'disabled');
     cy.get(montarTestId('error-wrap')).should('not.have.descendants');
   });
 
   it('Should present valid state if form is valid', () => {
     cy.get(montarTestId('email')).focus().type(faker.internet.email());
-    cy.get(montarTestId('email-status'))
-      .should('have.attr', 'title', 'Tudo Certo')
-      .should('contain.text', '🟢');
+    cy.get(montarTestId('email-wrap')).should('have.attr', 'data-status', 'valid');
+    cy.get(montarTestId('email')).should('not.have.attr', 'title');
+    cy.get(montarTestId('email-label')).should('not.have.attr', 'title');
     cy.get(montarTestId('password')).focus().type(faker.random.alphaNumeric(5));
-    cy.get(montarTestId('password-status'))
-      .should('have.attr', 'title', 'Tudo Certo')
-      .should('contain.text', '🟢');
+    cy.get(montarTestId('password-wrap')).should('have.attr', 'data-status', 'valid');
+    cy.get(montarTestId('password')).should('not.have.attr', 'title');
+    cy.get(montarTestId('password-label')).should('not.have.attr', 'title');
     cy.get(montarTestId('submit')).should('not.have.attr', 'disabled');
     cy.get(montarTestId('error-wrap')).should('not.have.descendants');
   });
