@@ -120,4 +120,19 @@ describe('Login', () => {
     cy.url().should('eq', `${baseUrl}/`);
     cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')));
   });
+
+  it('Should prevent multiple submits', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request');
+    cy.get(montarTestId('email')).focus().type('mango@gmail.com');
+    cy.get(montarTestId('password')).focus().type('12345');
+    cy.get(montarTestId('submit')).dblclick();
+    cy.get('@request.all').should('have.length', 1);
+  });
 });
