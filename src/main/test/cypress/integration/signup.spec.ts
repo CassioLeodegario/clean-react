@@ -82,13 +82,13 @@ describe('SignUp', () => {
     FormHelper.testUrl('/signup');
   });
 
-  // it('Should save accessToken if valid credentials are provided', () => {
-  //   Http.mockOk();
-  //   simulateValidSubmit();
-  //   cy.get(montarTestId('error-wrap')).should('not.have.descendants');
-  //   FormHelper.testUrl('/');
-  //   FormHelper.testlocalStorageItem('accessToken');
-  // });
+  it('Should save accessToken if valid credentials are provided', () => {
+    Http.mockOk();
+    simulateValidSubmit();
+    cy.get(montarTestId('error-wrap')).should('not.have.descendants');
+    FormHelper.testUrl('/');
+    FormHelper.testlocalStorageItem('accessToken');
+  });
 
   // it('Should prevent multiple submits', () => {
   //   Http.mockOk();
