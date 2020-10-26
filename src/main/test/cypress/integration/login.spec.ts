@@ -135,7 +135,7 @@ describe('Login', () => {
     cy.get('@request.all').should('have.length', 1);
   });
 
-  it('Should prevent multiple submits', () => {
+  it('Should not call submit if form is invalid', () => {
     cy.route({
       method: 'POST',
       url: /login/,
@@ -144,8 +144,7 @@ describe('Login', () => {
         accessToken: faker.random.uuid()
       }
     }).as('request');
-    cy.get(montarTestId('email')).focus().type('mango@gmail.com');
-    cy.get(montarTestId('submit')).dblclick();
+    cy.get(montarTestId('email')).focus().type('mango@gmail.com').type('{enter}');
     cy.get('@request.all').should('have.length', 0);
   });
 });
