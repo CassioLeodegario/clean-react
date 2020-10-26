@@ -1,6 +1,6 @@
 import faker from 'faker';
 import * as FormHelper from '../support/form-helper';
-import * as Http from './login-mocks';
+import * as Http from '../support/login-mocks';
 
 const montarTestId = (id: string): string => {
   return `[data-testid="${id}"]`;
