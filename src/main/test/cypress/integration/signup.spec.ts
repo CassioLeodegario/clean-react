@@ -75,12 +75,12 @@ describe('SignUp', () => {
     FormHelper.testUrl('/signup');
   });
 
-  // it('Should present UnexpectedError if invalid data is returned', () => {
-  //   Http.mockInvalidData();
-  //   simulateValidSubmit();
-  //   FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
-  //   FormHelper.testUrl('/login');
-  // });
+  it('Should present UnexpectedError if invalid data is returned', () => {
+    Http.mockInvalidData();
+    simulateValidSubmit();
+    FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
+    FormHelper.testUrl('/signup');
+  });
 
   // it('Should save accessToken if valid credentials are provided', () => {
   //   Http.mockOk();
