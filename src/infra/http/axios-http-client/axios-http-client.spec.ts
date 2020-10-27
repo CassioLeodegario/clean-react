@@ -1,5 +1,5 @@
 import { AxiosHttpClient } from './axios-http-client';
-import { mockPostRequest } from '@/data/test';
+import { mockGetRequest, mockPostRequest } from '@/data/test';
 import { mockAxios, mockHttpResponse } from '../test';
 import axios from 'axios';
 
@@ -45,10 +45,10 @@ describe('AxiosHttpClient', () => {
 
   describe('GET', () => {
     test('Should call axios.post with correct URL, verb and body', async() => {
-      const request = mockPostRequest();
+      const request = mockGetRequest();
       const { sut, mockedAxios } = makeSut();
-      await sut.post(request);
-      expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body);
+      await sut.get(request);
+      expect(mockedAxios.get).toHaveBeenCalledWith(request.url);
     });
   });
 });
