@@ -57,21 +57,7 @@
           .iconWrap{
             position: absolute;
             top: -10px;
-            right: -10px;
-            
-            padding: 10px;
-            display: flex;
-            border-radius: 100%;
-            box-shadow: 0px 1px 3px -1px $black;
-
-            &.red{
-              background-color: $invalid;
-            }
-
-            &.green{
-              background-color: $valid;
-            }
-           
+            right: -10px;           
           }
 
           time{
