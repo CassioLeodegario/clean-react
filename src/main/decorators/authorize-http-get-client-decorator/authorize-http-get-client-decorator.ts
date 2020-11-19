@@ -17,7 +17,7 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
       });
     }
     this.getStorage.get('account');
-    await this.httpGetClient.get(params);
-    return null;
+    const httpResponse = await this.httpGetClient.get(params);
+    return httpResponse;
   }
 }
