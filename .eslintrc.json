@@ -25,8 +25,11 @@
     "@typescript-eslint/comma-spacing": "off",
     "@typescript-eslint/return-await": "off",
     "@typescript-eslint/semi": "off",
+    "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/camelcase": "off",
     "no-unused-vars": "off",
+    "node-declare": "off",
+    "import/export": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "@typescript-eslint/space-before-function-paren": [

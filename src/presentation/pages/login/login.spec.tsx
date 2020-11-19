@@ -7,11 +7,11 @@ import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { Login } from '@/presentation/pages';
 import { AuthenticationSpy, ValidationStub, Helper } from '@/presentation/test';
 import { InvalidCredentialsError } from '@/domain/errors';
-import { AccountModel } from '@/domain/models';
+import { AddAccount } from '@/domain/usecases';
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy,
-  setCurrentAccountMock: (account: AccountModel) => void
+  setCurrentAccountMock: (account: AddAccount.Model) => void
 }
 
 type SutParams = {
