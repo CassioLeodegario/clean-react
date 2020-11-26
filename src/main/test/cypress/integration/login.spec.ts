@@ -1,5 +1,6 @@
 import faker from 'faker';
-import * as FormHelper from '../support/form-helper';
+import * as FormHelper from '../support/form-helpers';
+import * as Helper from '../support/helpers';
 import * as Http from '../support/login-mocks';
 
 const montarTestId = (id: string): string => {
@@ -49,29 +50,22 @@ describe('Login', () => {
     Http.mockInvalidCredentialsError();
     simulateValidSubmit();
     FormHelper.testMainError('Credenciais Inválidas');
-    FormHelper.testUrl('/login');
+    Helper.testUrl('/login');
   });
 
   it('Should present UnexpectedError on default error cases', () => {
     Http.mockUnexpectedError();
     simulateValidSubmit();
     FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
-    FormHelper.testUrl('/login');
-  });
-
-  it('Should present UnexpectedError if invalid data is returned', () => {
-    Http.mockInvalidData();
-    simulateValidSubmit();
-    FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
-    FormHelper.testUrl('/login');
+    Helper.testUrl('/login');
   });
 
   it('Should save account if valid credentials are provided', () => {
     Http.mockOk();
     simulateValidSubmit();
     cy.get(montarTestId('error-wrap')).should('not.have.descendants');
-    FormHelper.testUrl('/');
-    FormHelper.testlocalStorageItem('account');
+    Helper.testUrl('/');
+    Helper.testlocalStorageItem('account');
   });
 
   it('Should prevent multiple submits', () => {
@@ -79,12 +73,12 @@ describe('Login', () => {
     cy.get(montarTestId('email')).focus().type('mango@gmail.com');
     cy.get(montarTestId('password')).focus().type('12345');
     cy.get(montarTestId('submit')).dblclick();
-    FormHelper.testHttpCallsCount(1);
+    Helper.testHttpCallsCount(1);
   });
 
   it('Should not call submit if form is invalid', () => {
     Http.mockOk();
     cy.get(montarTestId('email')).focus().type('mango@gmail.com').type('{enter}');
-    FormHelper.testHttpCallsCount(0);
+    Helper.testHttpCallsCount(0);
   });
 });
