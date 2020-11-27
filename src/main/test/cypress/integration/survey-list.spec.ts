@@ -30,4 +30,11 @@ describe('Survey List', () => {
     const { name } = Helper.getLocalStorageItem('account');
     cy.get(montarTestId('username')).should('contain.text', name);
   });
+
+  it('Should logout on link click', () => {
+    Http.mockUnexpectedError();
+    cy.visit('');
+    cy.get(montarTestId('logout')).click();
+    Helper.testUrl('/login');
+  });
 });
