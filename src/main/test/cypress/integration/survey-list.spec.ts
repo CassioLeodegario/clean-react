@@ -17,4 +17,10 @@ describe('Survey List', () => {
     cy.visit('');
     cy.get(montarTestId('error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
   });
+
+  it('Should logout on AccessDeniedError', () => {
+    Http.mockAccessDeniedError();
+    cy.visit('');
+    Helper.testUrl('/login');
+  });
 });
