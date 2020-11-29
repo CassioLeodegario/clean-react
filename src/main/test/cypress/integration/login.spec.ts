@@ -1,11 +1,17 @@
 import faker from 'faker';
-import * as FormHelper from '../support/form-helpers';
-import * as Helper from '../support/helpers';
-import * as Http from '../support/login-mocks';
+import * as FormHelper from '../utils/form-helpers';
+import * as Helper from '../utils/helpers';
+import * as Http from '../utils/http-mocks';
 
 const montarTestId = (id: string): string => {
   return `[data-testid="${id}"]`;
 };
+
+const path = /login/;
+export const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path);
+export const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST');
+export const mockSucccess = (): void => Http.mockOk(path, 'POST', 'fx:account');
+export const mockInvalidData = (): void => Http.mockOk(path, 'POST', { invalid: faker.random.uuid() });
 
 const simulateValidSubmit = (): void => {
   cy.get(montarTestId('email')).focus().type(faker.internet.email());
@@ -47,21 +53,21 @@ describe('Login', () => {
   });
 
   it('Should present InvalidCredentialsError on 401', () => {
-    Http.mockInvalidCredentialsError();
+    mockInvalidCredentialsError();
     simulateValidSubmit();
     FormHelper.testMainError('Credenciais Inválidas');
     Helper.testUrl('/login');
   });
 
   it('Should present UnexpectedError on default error cases', () => {
-    Http.mockUnexpectedError();
+    mockUnexpectedError();
     simulateValidSubmit();
     FormHelper.testMainError('Erro inesperado. Tente novamente mais tarde');
     Helper.testUrl('/login');
   });
 
   it('Should save account if valid credentials are provided', () => {
-    Http.mockOk();
+    mockSucccess();
     simulateValidSubmit();
     cy.get(montarTestId('error-wrap')).should('not.have.descendants');
     Helper.testUrl('/');
@@ -69,7 +75,7 @@ describe('Login', () => {
   });
 
   it('Should prevent multiple submits', () => {
-    Http.mockOk();
+    mockSucccess();
     cy.get(montarTestId('email')).focus().type('mango@gmail.com');
     cy.get(montarTestId('password')).focus().type('12345');
     cy.get(montarTestId('submit')).dblclick();
@@ -77,7 +83,7 @@ describe('Login', () => {
   });
 
   it('Should not call submit if form is invalid', () => {
-    Http.mockOk();
+    mockSucccess();
     cy.get(montarTestId('email')).focus().type('mango@gmail.com').type('{enter}');
     Helper.testHttpCallsCount(0);
   });
