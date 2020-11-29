@@ -8,6 +8,7 @@ const montarTestId = (id: string): string => {
 const path = /surveys/;
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET');
 const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET');
+const mockSuccess = (): void => Http.mockOk(path, 'GET', 'fx:survey-list');
 
 describe('Survey List', () => {
   beforeEach(() => {
@@ -23,6 +24,15 @@ describe('Survey List', () => {
     cy.get(montarTestId('error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
   });
 
+  it('Should reload on button click', () => {
+    mockUnexpectedError();
+    cy.visit('');
+    cy.get(montarTestId('error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
+    mockSuccess();
+    cy.get(montarTestId('reload')).click();
+    cy.get('li:not(:empty)').should('have.length', 2);
+  });
+
   it('Should logout on AccessDeniedError', () => {
     mockAccessDeniedError();
     cy.visit('');
@@ -36,10 +46,28 @@ describe('Survey List', () => {
     cy.get(montarTestId('username')).should('contain.text', name);
   });
 
-  it('Should logout on link click', () => {
-    mockUnexpectedError();
+  it('Should present survey items', () => {
+    mockSuccess();
     cy.visit('');
-    cy.get(montarTestId('logout')).click();
-    Helper.testUrl('/login');
+    cy.get('li:empty').should('have.length', 4);
+    cy.get('li:not(:empty)').should('have.length', 2);
+    cy.get('li:nth-child(1)').then(li => {
+      assert.equal(li.find('[data-testid="day"]').text(), '03');
+      assert.equal(li.find('[data-testid="month"]').text(), 'fev');
+      assert.equal(li.find('[data-testid="year"]').text(), '2018');
+      assert.equal(li.find('[data-testid="question"]').text(), 'Question 1');
+      cy.fixture('icons').then(icon => {
+        assert.equal(li.find('[data-testid="icon"]').attr('src'), icon.thumbUp);
+      });
+    });
+    cy.get('li:nth-child(2)').then(li => {
+      assert.equal(li.find('[data-testid="day"]').text(), '20');
+      assert.equal(li.find('[data-testid="month"]').text(), 'out');
+      assert.equal(li.find('[data-testid="year"]').text(), '2020');
+      assert.equal(li.find('[data-testid="question"]').text(), 'Question 2');
+      cy.fixture('icons').then(icon => {
+        assert.equal(li.find('[data-testid="icon"]').attr('src'), icon.thumbDown);
+      });
+    });
   });
 });
