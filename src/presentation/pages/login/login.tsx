@@ -5,7 +5,6 @@ import { LoginHeader, Input, FormStatus, Footer, SubmitButton } from '@/presenta
 import { FormContext, ApiContext } from '@/presentation/contexts';
 import { Validation } from '@/presentation/protocols/validation';
 import { Authentication } from '@/domain/usecases';
-import { ValidationBuilder } from '@/validation/validators/builder/validation-builder';
 
 type Props = {
   validation: Validation,
