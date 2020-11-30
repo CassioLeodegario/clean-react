@@ -98,6 +98,7 @@ describe('SignUp', () => {
     mockSucccess();
     populateField();
     cy.get(montarTestId('submit')).dblclick();
+    cy.wait('@request');
     Helper.testHttpCallsCount(1);
   });
 

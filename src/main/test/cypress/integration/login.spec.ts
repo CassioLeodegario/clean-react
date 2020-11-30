@@ -79,6 +79,7 @@ describe('Login', () => {
     cy.get(montarTestId('email')).focus().type('mango@gmail.com');
     cy.get(montarTestId('password')).focus().type('12345');
     cy.get(montarTestId('submit')).dblclick();
+    cy.wait('@request');
     Helper.testHttpCallsCount(1);
   });
 
