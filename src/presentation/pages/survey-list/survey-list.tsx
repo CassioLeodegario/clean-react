@@ -33,9 +33,9 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
       <div className={Styles.contentWrap}>
         <h2>Enquetes</h2>
         <SurveyContext.Provider value={{ state, setState }}>
-          { state.error 
-          ? <Error error={state.error} reload={reload}/> 
-          : <SurveyListItem /> }
+          { state.error
+            ? <Error error={state.error} reload={reload}/>
+            : <SurveyListItem /> }
         </SurveyContext.Provider>
       </div>
       <Footer />
