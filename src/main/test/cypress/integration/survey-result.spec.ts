@@ -7,6 +7,7 @@ const montarTestId = (id: string): string => {
 
 const path = /surveys/;
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET');
+const mockSuccess = (): void => Http.mockOk(path, 'GET', 'fx:survey-result');
 
 describe('SurveyResult', () => {
   beforeEach(() => {
@@ -20,5 +21,14 @@ describe('SurveyResult', () => {
     mockUnexpectedError();
     cy.visit('/surveys/any_id');
     cy.get(montarTestId('error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
+  });
+
+  it('Should reload on button click', () => {
+    mockUnexpectedError();
+    cy.visit('/surveys/any_id');
+    cy.get(montarTestId('error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
+    mockSuccess();
+    cy.get(montarTestId('reload')).click();
+    cy.get(montarTestId('question')).should('exist');
   });
 });
