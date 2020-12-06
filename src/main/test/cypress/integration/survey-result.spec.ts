@@ -7,6 +7,7 @@ const montarTestId = (id: string): string => {
 
 const path = /surveys/;
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET');
+const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET');
 const mockSuccess = (): void => Http.mockOk(path, 'GET', 'fx:survey-result');
 
 describe('SurveyResult', () => {
@@ -30,5 +31,11 @@ describe('SurveyResult', () => {
     mockSuccess();
     cy.get(montarTestId('reload')).click();
     cy.get(montarTestId('question')).should('exist');
+  });
+
+  it('Should logout on AccessDeniedError', () => {
+    mockAccessDeniedError();
+    cy.visit('/surveys/any_id');
+    Helper.testUrl('/login');
   });
 });
