@@ -8,20 +8,30 @@ const makeSut = (field: string, fieldToCompare: string): FieldValidation => {
 };
 
 describe('CompareFieldsValidation', () => {
-  test('Should Return Error if compare is invalid', () => {
-    const fieldName = faker.database.column();
-    const fieldToCompare = faker.database.column();
-    const sut = makeSut(fieldName, fieldToCompare);
-    const error = sut.validate({ [fieldName]: 'any_value', [fieldToCompare]: 'another_value' });
-    expect(error).toEqual(new InvalidFieldError(fieldName));
+  test('Should return error if compare is invalid', () => {
+    const field = 'any_field';
+    const fieldToCompare = 'other_field';
+    const sut = makeSut(field, fieldToCompare);
+
+    const error = sut.validate({
+      [field]: 'any_value',
+      [fieldToCompare]: 'other_value'
+    });
+
+    expect(error).toEqual(new InvalidFieldError(field));
   });
 
   test('Should Return falsy if compare is valid', () => {
-    const fieldName = faker.database.column();
-    const fieldToCompare = faker.database.column();
-    const valueToCompare = faker.random.word();
-    const sut = makeSut(fieldName, fieldToCompare);
-    const error = sut.validate({ [fieldName]: valueToCompare, [fieldToCompare]: valueToCompare });
+    const field = 'any_field';
+    const fieldToCompare = 'other_field';
+    const value = faker.random.word();
+    const sut = makeSut(field, fieldToCompare);
+
+    const error = sut.validate({
+      [field]: value,
+      [fieldToCompare]: value
+    });
+
     expect(error).toBeFalsy();
   });
 });
