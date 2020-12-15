@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { SurveyResult } from '@/presentation/pages';
 import React from 'react';
@@ -111,5 +112,13 @@ describe('SurveyResult Component', () => {
     await waitFor(() => screen.getByTestId('survey-result'));
     fireEvent.click(screen.getByTestId('back-button'));
     expect(history.location.pathname).toBe('/');
+  });
+
+  test('Should not present loading on active answer click', async() => {
+    makeSut();
+    await waitFor(() => screen.getByTestId('survey-result'));
+    const answersWrap = screen.queryAllByTestId('answer-wrap');
+    fireEvent.click(answersWrap[0]);
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
   });
 });
