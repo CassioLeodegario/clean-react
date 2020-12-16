@@ -72,6 +72,7 @@ describe('SurveyResult', () => {
 
   describe('save', () => {
     const mockUnexpectedError = (): void => Http.mockServerError(path, 'PUT');
+    const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'PUT');
 
     beforeEach(() => {
       cy.server();
@@ -86,6 +87,12 @@ describe('SurveyResult', () => {
       mockUnexpectedError();
       cy.get('li:nth-child(2)').click();
       cy.get(montarTestId('error')).should('contain.text', 'Erro inesperado. Tente novamente mais tarde');
+    });
+
+    it('Should logout on AccessDeniedError', () => {
+      mockAccessDeniedError();
+      cy.get('li:nth-child(2)').click();
+      Helper.testUrl('/login');
     });
   });
 });
